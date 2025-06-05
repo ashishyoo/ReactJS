@@ -98,10 +98,67 @@ So, here is the catch, the browser will reconstruct the dom tree from the beginn
 
 The Virtual DOM (VDOM) is a lightweight, in-memory representation of the actual web browser's DOM. Think of it as a blueprint or a sketch of what the real user interface should look like at any given moment. It's a plain JavaScript object that mirrors the structure of your HTML elements.
 
+Let's take the above example
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Good Morning.</h1>
+  </body>
+</html>
+```
+
+So when this html file is given to our browser, it will convert this document into DOM (Document Object Model), where our each HTML element is represented into tree like structure (nodes).
+
+![](./imgs/dom-tree.png)
+
+And based on the DOM tree, the content is displayed in our browser.
+
+![](./imgs/tdom1.png)
+
+Now, after the first render, the something called a virtual DOM is created which is the replica of our DOM tree.
+
+![](./imgs/vdom1.png)
+
 **2. Diffing Algorithm**
 
 The Diffing Algorithm is a comparison process that React uses to figure out what has changed between two Virtual DOM trees. Whenever your React component's state or props change, React creates a new Virtual DOM tree representing the updated UI. The Diffing Algorithm then compares this new VDOM tree with the previous VDOM tree.
 
+Let's suppose we again, add another heading as
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Good Morning.</h1>
+    <h1>Good Afternoon.</h1>
+  </body>
+</html>
+```
+
+Now comes the interesting part, the browser will not reconstruct the dom tree from the beginning, instead it will create a new virtual DOM with the changes.
+
+![](./imgs/vdom2.png)
+
+Now, our current virtual DOM is compared with the previously created virtual DOM, and changes are figured out. In our case, Virtual DOM 1 is compared with Virtual DOM 2.
+
+![](./imgs/diffing.png)
+
 **3. Reconciliation**
 
 Reconciliation is the process of applying the changes identified by the Diffing Algorithm to the actual browser DOM. It's the final step where React takes the determined minimal changes and updates the visible user interface.
+
+Now, the change is injected into our original DOM tree, which is then rendered by our browser.
+
+![](./imgs/reconciliation.png)
